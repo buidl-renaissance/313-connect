@@ -477,13 +477,27 @@ export default function Home() {
   };
   
   const handleClaimNumber = async () => {
-    if (!isAuthenticated) {
-      alert('Please connect your wallet first');
+    // Check if user has typed a number
+    if (!typedNumber) {
+      alert('Please enter a number using the dialpad');
       return;
     }
     
-    if (!typedNumber || !availability) {
-      alert('Please check availability first');
+    // Check if user has verified availability
+    if (availability === null) {
+      alert('Please check if the number is available first');
+      return;
+    }
+    
+    // Check if number is actually available
+    if (!availability) {
+      alert('This number is already claimed. Please choose a different number.');
+      return;
+    }
+    
+    // Check authentication
+    if (!isAuthenticated) {
+      alert('Please connect your wallet first to claim a number');
       return;
     }
     
@@ -600,7 +614,7 @@ export default function Home() {
             </DialButton>
           </DialPad>
           
-          <CTAButton onClick={handleClaimNumber} disabled={isClaiming || !availability}>
+          <CTAButton onClick={handleClaimNumber} disabled={isClaiming}>
             {isClaiming ? 'Claiming...' : 'Claim Your Number'}
           </CTAButton>
         </Hero>
