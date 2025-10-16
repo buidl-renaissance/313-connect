@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { QRCodeSVG } from 'qrcode.react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const Overlay = styled.div`
   position: fixed;
@@ -186,7 +186,7 @@ export function QRModal({ challenge, onVerify, onClose }: QRModalProps) {
       } else {
         setError('Verification failed. Please check your signature and try again.');
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred during verification');
     } finally {
       setIsVerifying(false);
@@ -209,7 +209,7 @@ export function QRModal({ challenge, onVerify, onClose }: QRModalProps) {
           <strong>How to connect:</strong>
           <ol>
             <li>Open the 313 Connect mobile app</li>
-            <li>Tap "Scan to Connect"</li>
+            <li>Tap &quot;Scan to Connect&quot;</li>
             <li>Point your camera at this QR code</li>
             <li>Confirm the connection in the app</li>
           </ol>
