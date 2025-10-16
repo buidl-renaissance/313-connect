@@ -114,6 +114,14 @@ const DialPad = styled.div`
     grid-template-columns: repeat(3, 80px);
     gap: 0.8rem;
   }
+  
+  .zero-button {
+    grid-column: 2 / 3;
+  }
+  
+  .backspace-button {
+    grid-column: 3 / 4;
+  }
 `;
 
 const DialButton = styled.button<{ $isActive?: boolean }>`
@@ -131,11 +139,16 @@ const DialButton = styled.button<{ $isActive?: boolean }>`
   transition: all 0.3s ease;
   box-shadow: ${props => props.$isActive ? '0 0 30px rgba(255, 115, 0, 0.5)' : 'none'};
   
-  &:hover {
+  &:hover:not(:disabled) {
     background: linear-gradient(135deg, rgba(255, 115, 0, 0.3) 0%, rgba(255, 165, 0, 0.3) 100%);
     border-color: #ff7300;
     transform: scale(1.05);
     box-shadow: 0 0 30px rgba(255, 115, 0, 0.5);
+  }
+  
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
   }
   
   @media (max-width: 768px) {
@@ -419,10 +432,16 @@ export default function Home() {
   const router = useRouter();
   const { isAuthenticated, token } = useAuth();
   
-  const dialNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  
   const handleNumberClick = (num: number) => {
+    // Limit to 6 digits
+    if (typedNumber.length >= 6) return;
     setTypedNumber(prev => prev + num);
+    setAvailability(null);
+    setAvailabilityMessage('');
+  };
+  
+  const handleBackspace = () => {
+    setTypedNumber(prev => prev.slice(0, -1));
     setAvailability(null);
     setAvailabilityMessage('');
   };
@@ -487,7 +506,7 @@ export default function Home() {
       } else {
         alert(data.error || 'Failed to claim number');
       }
-    } catch (error) {
+    } catch {
       alert('Error claiming number');
     } finally {
       setIsClaiming(false);
@@ -544,7 +563,8 @@ export default function Home() {
           </NumberDisplay>
           
           <DialPad>
-            {dialNumbers.map((num) => (
+            {/* Numbers 1-9 */}
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
               <DialButton
                 key={num}
                 $isActive={activeNumber === num}
@@ -555,6 +575,29 @@ export default function Home() {
                 {num}
               </DialButton>
             ))}
+            
+            {/* Empty space */}
+            <div style={{ width: '100px' }} />
+            
+            {/* Zero button */}
+            <DialButton
+              className="zero-button"
+              $isActive={activeNumber === 0}
+              onMouseEnter={() => setActiveNumber(0)}
+              onMouseLeave={() => setActiveNumber(null)}
+              onClick={() => handleNumberClick(0)}
+            >
+              0
+            </DialButton>
+            
+            {/* Backspace button */}
+            <DialButton
+              className="backspace-button"
+              onClick={handleBackspace}
+              disabled={!typedNumber}
+            >
+              ⌫
+            </DialButton>
           </DialPad>
           
           <CTAButton onClick={handleClaimNumber} disabled={isClaiming || !availability}>
