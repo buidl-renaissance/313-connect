@@ -433,9 +433,17 @@ export default function Home() {
   const { isAuthenticated, token } = useAuth();
   
   const handleNumberClick = (num: number) => {
+    console.log('Number clicked:', num, 'Current typedNumber:', typedNumber);
     // Limit to 6 digits
-    if (typedNumber.length >= 6) return;
-    setTypedNumber(prev => prev + num);
+    if (typedNumber.length >= 6) {
+      console.log('Max length reached, ignoring');
+      return;
+    }
+    setTypedNumber(prev => {
+      const newValue = prev + num;
+      console.log('New typedNumber will be:', newValue);
+      return newValue;
+    });
     setAvailability(null);
     setAvailabilityMessage('');
   };
