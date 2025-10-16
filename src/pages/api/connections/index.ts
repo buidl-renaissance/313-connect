@@ -100,7 +100,7 @@ async function handleGet(
           userId: otherUserId,
           identity: identity ? {
             number: identity.number,
-            fullNumber: `313${identity.number}`,
+            fullNumber: `313-${identity.number}`,
           } : undefined,
           profile: profile ? {
             displayName: profile.displayName,

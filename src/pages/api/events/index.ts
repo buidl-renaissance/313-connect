@@ -106,7 +106,7 @@ async function handleGet(
           creator: {
             identity: identity ? {
               number: identity.number,
-              fullNumber: `313${identity.number}`,
+              fullNumber: `313-${identity.number}`,
             } : undefined,
             profile: profile ? {
               displayName: profile.displayName,
@@ -219,7 +219,7 @@ async function handlePost(
         creator: {
           identity: identity ? {
             number: identity.number,
-            fullNumber: `313${identity.number}`,
+            fullNumber: `313-${identity.number}`,
           } : undefined,
           profile: profile ? {
             displayName: profile.displayName,

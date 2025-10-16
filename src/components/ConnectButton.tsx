@@ -89,7 +89,7 @@ export function ConnectButton({ variant = 'primary' }: ConnectButtonProps) {
     return (
       <UserInfo>
         {user.identity && (
-          <Identity>313{user.identity.number}</Identity>
+          <Identity>313-{user.identity.number}</Identity>
         )}
         <LogoutButton onClick={logout}>Logout</LogoutButton>
       </UserInfo>

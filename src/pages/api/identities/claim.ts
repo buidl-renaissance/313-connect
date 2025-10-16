@@ -89,7 +89,7 @@ export default async function handler(
     if (takenIdentity) {
       return res.status(409).json({
         success: false,
-        error: `313${numberStr} is already claimed`,
+        error: `313-${numberStr} is already claimed`,
       });
     }
 
@@ -121,7 +121,7 @@ export default async function handler(
       identity: {
         id: identityId,
         number: numberStr,
-        fullNumber: `313${numberStr}`,
+        fullNumber: `313-${numberStr}`,
       },
     });
   } catch (error) {

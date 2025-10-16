@@ -50,7 +50,7 @@ export default async function handler(
       .where(eq(identities.number, numberStr))
       .limit(1);
 
-    const fullNumber = `313${numberStr}`;
+    const fullNumber = `313-${numberStr}`;
     const isAvailable = !existingIdentity;
 
     if (isAvailable) {

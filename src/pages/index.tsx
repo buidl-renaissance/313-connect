@@ -519,7 +519,7 @@ export default function Home() {
           <NumberDisplay>
             <DisplayLabel>Check Availability</DisplayLabel>
             <DisplayedNumber>
-              {typedNumber ? `313${typedNumber}` : '313___'}
+              {typedNumber ? `313-${typedNumber}` : '313-___'}
             </DisplayedNumber>
             {availabilityMessage && (
               <AvailabilityStatus $available={availability}>
@@ -567,7 +567,7 @@ export default function Home() {
           
           <IDExample>
             <IDLabel>Your Connect ID</IDLabel>
-            <IDNumber>313562</IDNumber>
+            <IDNumber>313-562</IDNumber>
             <IDRegion>📍 Midtown</IDRegion>
           </IDExample>
           

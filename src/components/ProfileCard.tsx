@@ -75,7 +75,7 @@ export function ProfileCard({
   return (
     <Card>
       {identity && (
-        <Identity>313{identity.number}</Identity>
+        <Identity>313-{identity.number}</Identity>
       )}
       
       {displayName && (
