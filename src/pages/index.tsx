@@ -561,7 +561,7 @@ export default function Home() {
       <Container>
         <Hero>
           <HeroContent>
-            <Logo>313 CONNECT</Logo>
+            {/* <Logo>313 CONNECT</Logo> */}
             
             <NumberDisplay>
               <DisplayLabel>Claim Your Number</DisplayLabel>
