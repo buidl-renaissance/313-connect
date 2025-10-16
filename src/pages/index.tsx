@@ -436,7 +436,7 @@ export default function Home() {
       const data = await response.json();
       setAvailability(data.available);
       setAvailabilityMessage(data.message);
-    } catch (error) {
+    } catch {
       setAvailabilityMessage('Error checking availability');
       setAvailability(null);
     } finally {
@@ -556,7 +556,7 @@ export default function Home() {
               <TimelineMarker>4</TimelineMarker>
               <TimelineContent>
                 <h4>Join Your Community</h4>
-                <p>Create regional sub-IDs tied to specific neighborhoods. Attend local events, discover what's happening in your area.</p>
+                <p>Create regional sub-IDs tied to specific neighborhoods. Attend local events, discover what&apos;s happening in your area.</p>
               </TimelineContent>
             </TimelineItem>
           </Timeline>
@@ -578,7 +578,7 @@ export default function Home() {
               <FeatureIcon>📍</FeatureIcon>
               <FeatureTitle>Hyperlocal</FeatureTitle>
               <FeatureDescription>
-                Join regional communities tied to Detroit neighborhoods — Midtown, Hamtramck, Corktown. Your network starts with who's around you.
+                Join regional communities tied to Detroit neighborhoods — Midtown, Hamtramck, Corktown. Your network starts with who&apos;s around you.
               </FeatureDescription>
             </FeatureCard>
             
@@ -610,7 +610,7 @@ export default function Home() {
               <FeatureIcon>⚡</FeatureIcon>
               <FeatureTitle>Founding Members</FeatureTitle>
               <FeatureDescription>
-                Early claimants of short IDs get rare, collectible status. Be part of Detroit's digital legacy from the beginning.
+                Early claimants of short IDs get rare, collectible status. Be part of Detroit&apos;s digital legacy from the beginning.
               </FeatureDescription>
             </FeatureCard>
           </FeatureGrid>
@@ -619,7 +619,7 @@ export default function Home() {
         <Section style={{ textAlign: 'center', paddingBottom: '6rem' }}>
           <SectionTitle>Detroit Has a Heartbeat</SectionTitle>
           <Subtitle>
-            It's 313Connect. A new kind of local network where your number is your name, 
+            It&apos;s 313Connect. A new kind of local network where your number is your name, 
             your connections are real, and your privacy is built in.
           </Subtitle>
           <Subtitle style={{ marginTop: '2rem', fontSize: '1.5rem', fontWeight: 600, color: '#ff7300' }}>
