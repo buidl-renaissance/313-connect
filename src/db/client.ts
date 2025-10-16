@@ -1,6 +1,12 @@
 import { createClient } from '@libsql/client';
 import { drizzle } from 'drizzle-orm/libsql';
 import * as schema from './schema';
+import * as dotenv from 'dotenv';
+
+// Load environment variables if not already loaded
+if (!process.env.TURSO_DATABASE_URL) {
+  dotenv.config({ path: '.env.local' });
+}
 
 // Initialize Turso client
 const tursoClient = createClient({

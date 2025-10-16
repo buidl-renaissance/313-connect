@@ -5,6 +5,11 @@
  * Usage: tsx src/db/seed.ts
  */
 
+import * as dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config({ path: '.env.local' });
+
 import { db } from './client';
 import { users, identities, profiles, events } from './schema';
 import { generateId } from '@/utils/auth';
