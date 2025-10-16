@@ -58,27 +58,25 @@ async function handleGet(
   try {
     const { region, upcoming } = req.query;
 
-    // Build query
-    let query = db.select().from(events).where(eq(events.isActive, true));
+    // Build conditions
+    const conditions = [eq(events.isActive, true)];
 
     // Filter by region if provided
     if (region && typeof region === 'string') {
-      query = query.where(and(
-        eq(events.isActive, true),
-        eq(events.region, region)
-      ));
+      conditions.push(eq(events.region, region));
     }
 
     // Filter by upcoming if provided
     if (upcoming === 'true') {
       const now = new Date();
-      query = query.where(and(
-        eq(events.isActive, true),
-        gte(events.startTime, now)
-      ));
+      conditions.push(gte(events.startTime, now));
     }
 
-    const eventsList = await query;
+    // Execute query with all conditions
+    const eventsList = await db
+      .select()
+      .from(events)
+      .where(and(...conditions));
 
     // Enrich with creator info
     const enrichedEvents = await Promise.all(
