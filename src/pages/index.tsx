@@ -5,40 +5,31 @@ import { useRouter } from "next/router";
 
 const Container = styled.div`
   min-height: 100vh;
+  min-height: 100dvh; /* Use dynamic viewport height for mobile browsers */
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   color: #ffffff;
   overflow-x: hidden;
 `;
 
-const Header = styled.header`
-  padding: 2rem 2rem;
-  background: rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 115, 0, 0.2);
-  text-align: center;
-  
-  @media (max-width: 768px) {
-    padding: 1.5rem 1rem;
-  }
-`;
-
 const Logo = styled.h1`
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 900;
   background: linear-gradient(135deg, #ff7300 0%, #ffa500 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin: 0;
+  margin: 0 0 1.5rem 0;
   letter-spacing: -1px;
   
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
   }
 `;
 
 const Hero = styled.section`
-  min-height: calc(100vh - 100px);
+  min-height: 100vh;
+  min-height: 100dvh; /* Use dynamic viewport height for mobile browsers */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,8 +64,7 @@ const Hero = styled.section`
   }
   
   @media (max-width: 480px) {
-    padding: 1.5rem 1rem;
-    min-height: calc(100vh - 80px);
+    padding: 1rem;
   }
 `;
 
@@ -95,13 +85,13 @@ const DialPad = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  margin: 2rem auto;
+  margin: 1.5rem auto;
   width: 100%;
   max-width: 320px;
   
   @media (max-width: 480px) {
     gap: 0.75rem;
-    margin: 1.5rem auto;
+    margin: 1rem auto;
   }
   
   @media (max-width: 360px) {
@@ -318,9 +308,9 @@ const NumberDisplay = styled.div`
   position: relative;
   
   @media (max-width: 480px) {
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: 12px;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -432,6 +422,12 @@ const ClaimButton = styled.button<{ $show?: boolean }>`
     50% {
       box-shadow: 0 10px 40px rgba(255, 115, 0, 0.6), 0 0 30px rgba(255, 115, 0, 0.5);
     }
+  }
+  
+  @media (max-width: 480px) {
+    margin: 1rem auto 0;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
   }
   
   &:hover:not(:disabled) {
@@ -563,12 +559,9 @@ export default function Home() {
       </Head>
       
       <Container>
-        <Header>
-          <Logo>313 CONNECT</Logo>
-        </Header>
-        
         <Hero>
           <HeroContent>
+            <Logo>313 CONNECT</Logo>
             
             <NumberDisplay>
               <DisplayLabel>Claim Your Number</DisplayLabel>
