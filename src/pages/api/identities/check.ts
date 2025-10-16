@@ -9,6 +9,10 @@ type ResponseData = {
   number?: string;
 };
 
+/**
+ * POST /api/identities/check
+ * Check if a 313 number is available (public endpoint)
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
@@ -20,25 +24,25 @@ export default async function handler(
     });
   }
 
-  const { number } = req.body;
-
-  if (!number) {
-    return res.status(400).json({
-      available: false,
-      message: 'Number is required',
-    });
-  }
-
-  // Validate number format (only digits, 1-6 characters)
-  const numberStr = String(number);
-  if (!/^\d{1,6}$/.test(numberStr)) {
-    return res.status(400).json({
-      available: false,
-      message: 'Invalid number format. Use 1-6 digits only.',
-    });
-  }
-
   try {
+    const { number } = req.body;
+
+    if (!number) {
+      return res.status(400).json({
+        available: false,
+        message: 'Number is required',
+      });
+    }
+
+    // Validate number format (only digits, 1-6 characters)
+    const numberStr = String(number);
+    if (!/^\d{1,6}$/.test(numberStr)) {
+      return res.status(400).json({
+        available: false,
+        message: 'Invalid number format. Use 1-6 digits only.',
+      });
+    }
+
     // Check if number exists in database
     const [existingIdentity] = await db
       .select()
@@ -70,3 +74,4 @@ export default async function handler(
     });
   }
 }
+

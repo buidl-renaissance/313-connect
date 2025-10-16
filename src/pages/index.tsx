@@ -1,6 +1,9 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useAuth } from "@/hooks/useAuth";
+import { ConnectButton } from "@/components/ConnectButton";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -11,13 +14,20 @@ const Container = styled.div`
 
 const Header = styled.header`
   padding: 2rem 1rem;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(255, 115, 0, 0.2);
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 `;
 
 const Logo = styled.h1`
@@ -405,6 +415,9 @@ export default function Home() {
   const [availability, setAvailability] = useState<boolean | null>(null);
   const [availabilityMessage, setAvailabilityMessage] = useState<string>('');
   const [isChecking, setIsChecking] = useState(false);
+  const [isClaiming, setIsClaiming] = useState(false);
+  const router = useRouter();
+  const { isAuthenticated, token } = useAuth();
   
   const dialNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   
@@ -425,7 +438,7 @@ export default function Home() {
     
     setIsChecking(true);
     try {
-      const response = await fetch('/api/check-availability', {
+      const response = await fetch('/api/identities/check', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -444,6 +457,43 @@ export default function Home() {
     }
   };
   
+  const handleClaimNumber = async () => {
+    if (!isAuthenticated) {
+      alert('Please connect your wallet first');
+      return;
+    }
+    
+    if (!typedNumber || !availability) {
+      alert('Please check availability first');
+      return;
+    }
+    
+    setIsClaiming(true);
+    try {
+      const response = await fetch('/api/identities/claim', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ number: typedNumber }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        // Redirect to dashboard
+        router.push('/dashboard');
+      } else {
+        alert(data.error || 'Failed to claim number');
+      }
+    } catch (error) {
+      alert('Error claiming number');
+    } finally {
+      setIsClaiming(false);
+    }
+  };
+  
   return (
     <>
       <Head>
@@ -456,6 +506,7 @@ export default function Home() {
       <Container>
         <Header>
           <Logo>313CONNECT</Logo>
+          <ConnectButton />
         </Header>
         
         <Hero>
@@ -506,7 +557,9 @@ export default function Home() {
             ))}
           </DialPad>
           
-          <CTAButton>Claim Your Number</CTAButton>
+          <CTAButton onClick={handleClaimNumber} disabled={isClaiming || !availability}>
+            {isClaiming ? 'Claiming...' : 'Claim Your Number'}
+          </CTAButton>
         </Hero>
         
         <Section>

@@ -14,9 +14,9 @@
 John Gulbronson
 
 **Related Documents:**
-- PAD (Project Architecture Document)
-- Platform Deployment Docs (PDD)
-- Marketing Deployment Flow (MDF)
+- [PAD (Project Architecture Document)](./PAD.md)
+- Platform Deployment Docs (PDD) - Coming Soon
+- Marketing Deployment Flow (MDF) - Coming Soon
 
 **Repository / Workspace:**  
 github.com/detroitcommons/313connect

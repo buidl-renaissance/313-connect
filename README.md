@@ -7,8 +7,52 @@
 ## 📋 Documentation
 
 - [**Product Requirements Document (PRD)**](./docs/PRD.md) - Full product vision, roadmap, and specifications
+- [**Setup Guide**](./SETUP.md) - Complete setup instructions for development
+- [**Deployment Guide**](./DEPLOYMENT.md) - Production deployment to Vercel
 
-## 🚀 Getting Started
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- Yarn package manager
+- Turso account (free tier available)
+
+### Installation Steps
+
+1. **Clone and install dependencies:**
+   ```bash
+   yarn install
+   ```
+
+2. **Set up Turso database** (see [SETUP.md](./SETUP.md) for details):
+   ```bash
+   # Install Turso CLI
+   curl -sSfL https://get.tur.so/install.sh | bash
+   
+   # Create database and get credentials
+   turso db create 313connect
+   turso db show 313connect --url
+   turso db tokens create 313connect
+   ```
+
+3. **Create `.env.local`** with your Turso credentials
+
+4. **Initialize database:**
+   ```bash
+   yarn db:push
+   yarn db:seed
+   ```
+
+5. **Start development server:**
+   ```bash
+   yarn dev
+   ```
+
+Visit [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 🚀 Next.js Default Instructions
 
 First, run the development server:
 
@@ -43,10 +87,59 @@ The `src/pages/api` directory is mapped to `/api/*`. Files in this directory are
 
 ## 🛠 Tech Stack
 
-- **Frontend:** Next.js, React, Styled Components
-- **Backend:** Supabase / Turso (planned)
-- **Identity:** Thirdweb / DID-based auth (planned)
-- **Mobile:** React Native (Expo) (planned)
+- **Frontend:** Next.js 15, React 19, TypeScript, Styled Components
+- **Backend:** Turso (SQLite), Drizzle ORM
+- **Authentication:** DPoP (Demonstration of Proof-of-Possession)
+- **Identity:** Wallet-based signatures, JWT tokens
+- **Mobile:** React Native (Expo) - Coming soon
+
+## ✨ Features Implemented
+
+### v0.1 - Current Release
+
+**Authentication System:**
+- ✅ DPoP-based wallet authentication
+- ✅ QR code challenge generation
+- ✅ Client-side keypair management
+- ✅ JWT token issuance and refresh
+- ✅ Protected routes
+
+**Identity Management:**
+- ✅ 313 number claiming system
+- ✅ Real-time availability checking
+- ✅ User profiles with regions
+- ✅ Wallet address binding
+
+**Social Features:**
+- ✅ Peer-to-peer connections
+- ✅ Connection verification
+- ✅ Profile display
+
+**Events:**
+- ✅ Event creation and browsing
+- ✅ Regional filtering
+- ✅ Event check-ins
+- ✅ Community calendar
+
+**Web Application:**
+- ✅ Responsive landing page
+- ✅ User dashboard
+- ✅ Events page
+- ✅ Profile management
+
+## 📦 Database Schema
+
+The application uses Turso (SQLite) with the following tables:
+- `users` - User accounts with wallet addresses
+- `identities` - Claimed 313 numbers
+- `profiles` - User profile information
+- `connections` - Peer-to-peer connections
+- `events` - Community events
+- `checkins` - Event attendance
+- `auth_challenges` - Authentication challenges
+- `nonces` - Replay attack prevention
+
+See `src/db/schema.ts` for complete schema definition.
 
 ## 📚 Learn More
 
