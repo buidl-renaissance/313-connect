@@ -453,9 +453,16 @@ export default function Home() {
   };
   
   const handleCheckAvailability = async () => {
-    if (!typedNumber) return;
+    console.log('Check availability clicked, typedNumber:', typedNumber);
+    
+    if (!typedNumber) {
+      console.log('No typed number, returning');
+      return;
+    }
     
     setIsChecking(true);
+    console.log('Making API request...');
+    
     try {
       const response = await fetch('/api/identities/check', {
         method: 'POST',
@@ -466,9 +473,11 @@ export default function Home() {
       });
       
       const data = await response.json();
+      console.log('API response:', data);
       setAvailability(data.available);
       setAvailabilityMessage(data.message);
-    } catch {
+    } catch (error) {
+      console.error('Error checking availability:', error);
       setAvailabilityMessage('Error checking availability');
       setAvailability(null);
     } finally {
