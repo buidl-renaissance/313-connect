@@ -61,6 +61,7 @@ const Hero = styled.section`
     height: 600px;
     background: radial-gradient(circle, rgba(255, 115, 0, 0.1) 0%, transparent 70%);
     animation: pulse 4s ease-in-out infinite;
+    pointer-events: none;
   }
   
   @keyframes pulse {
