@@ -555,7 +555,7 @@ export default function Home() {
         <title>313-Connect - Your Local Network, Rooted in Detroit</title>
         <meta name="description" content="Your local network — verified by connection, rooted in Detroit." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" href="/images/313-connect.png" />
       </Head>
       
       <Container>
@@ -567,7 +567,7 @@ export default function Home() {
               <DisplayLabel>Claim Your Number</DisplayLabel>
               <NumberRow>
                 <DisplayedNumber>
-                  {typedNumber ? `313-${typedNumber}` : '313-___'}
+                  {typedNumber ? `313#${typedNumber}` : '313#___'}
                 </DisplayedNumber>
                 <StatusIndicator $status={getStatusIndicator()}>
                   {getStatusIndicator() === 'checking' && '⟳'}

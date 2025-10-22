@@ -45,7 +45,7 @@ async function seed() {
         number,
         isActive: true,
       });
-      console.log(`  ✓ Reserved: 313-${number}`);
+      console.log(`  ✓ Reserved: 313#${number}`);
     }
 
     // Create sample community events

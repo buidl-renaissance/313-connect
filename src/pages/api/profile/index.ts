@@ -91,7 +91,7 @@ async function handleGet(
         verificationStatus: profile.verificationStatus,
         identity: identity ? {
           number: identity.number,
-          fullNumber: `313-${identity.number}`,
+          fullNumber: `313#${identity.number}`,
         } : undefined,
       },
     });
@@ -176,7 +176,7 @@ async function handlePut(
         verificationStatus: profile?.verificationStatus || 'unverified',
         identity: identity ? {
           number: identity.number,
-          fullNumber: `313-${identity.number}`,
+          fullNumber: `313#${identity.number}`,
         } : undefined,
       },
     });

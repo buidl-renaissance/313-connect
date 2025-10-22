@@ -226,8 +226,8 @@ export default function ClaimNumber() {
   return (
     <>
       <Head>
-        <title>Claim 313-{number} - 313 Connect</title>
-        <meta name="description" content={`Claim your 313-${number} identity on 313 Connect`} />
+        <title>Claim 313#{number} - 313 Connect</title>
+        <meta name="description" content={`Claim your 313#${number} identity on 313 Connect`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -254,7 +254,7 @@ export default function ClaimNumber() {
           ) : !isAvailable ? (
             <>
               <Title>Number Taken</Title>
-              <NumberDisplay>313-{number}</NumberDisplay>
+              <NumberDisplay>313#{number}</NumberDisplay>
               <ErrorMessage>
                 <h3>❌ This number is already claimed</h3>
                 <p>Try choosing a different number.</p>
@@ -264,7 +264,7 @@ export default function ClaimNumber() {
           ) : (
             <>
               <Title>Claim Your Number</Title>
-              <NumberDisplay>313-{number}</NumberDisplay>
+              <NumberDisplay>313#{number}</NumberDisplay>
               <Text style={{ fontSize: '0.9rem', color: '#999999', marginBottom: '0.5rem' }}>
                 Scan the QR code with your phone
               </Text>

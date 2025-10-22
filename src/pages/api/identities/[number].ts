@@ -78,7 +78,7 @@ export default async function handler(
       success: true,
       identity: {
         number: identity.number,
-        fullNumber: `313-${identity.number}`,
+        fullNumber: `313#${identity.number}`,
         claimedAt: identity.claimedAt,
         profile: profile || undefined,
       },
