@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
 import { AuthGuard } from '@/components/AuthGuard';
@@ -168,13 +168,8 @@ export default function Offerings() {
   const [cardGeneratorOpen, setCardGeneratorOpen] = useState(false);
   const [selectedOffering, setSelectedOffering] = useState<{id: string, title: string} | null>(null);
 
-  useEffect(() => {
+  const fetchOfferings = useCallback(async () => {
     if (!token) return;
-
-    fetchOfferings();
-  }, [token]);
-
-  const fetchOfferings = async () => {
     try {
       const response = await fetch('/api/offerings', {
         headers: {
@@ -191,7 +186,11 @@ export default function Offerings() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchOfferings();
+  }, [fetchOfferings]);
 
   const handleToggleActive = async (id: string, isActive: boolean) => {
     try {

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
 import { AuthGuard } from '@/components/AuthGuard';
@@ -267,9 +267,18 @@ const LocationNote = styled.div`
 interface NearbyUser {
   userId: string;
   distance: string;
-  profile: any;
-  identity: any;
-  offering: any;
+  profile: {
+    displayName: string | null;
+    region: string | null;
+  } | null;
+  identity: {
+    fullNumber: string;
+  } | null;
+  offering: {
+    title: string;
+    category: string;
+    price: string | null;
+  } | null;
 }
 
 export default function Marketplace() {
@@ -286,7 +295,7 @@ export default function Marketplace() {
 
     checkLiveStatus();
     getUserLocation();
-  }, [token]);
+  }, [token, checkLiveStatus, getUserLocation]);
 
   useEffect(() => {
     if (userLocation) {
@@ -296,9 +305,11 @@ export default function Marketplace() {
       const interval = setInterval(fetchNearbyUsers, 30000);
       return () => clearInterval(interval);
     }
-  }, [userLocation]);
+  }, [userLocation, fetchNearbyUsers]);
 
-  const checkLiveStatus = async () => {
+  const checkLiveStatus = useCallback(async () => {
+    if (!token) return;
+    
     try {
       const response = await fetch('/api/marketplace/go-live', {
         headers: {
@@ -313,9 +324,9 @@ export default function Marketplace() {
     } catch (error) {
       console.error('Error checking live status:', error);
     }
-  };
+  }, [token]);
 
-  const getUserLocation = () => {
+  const getUserLocation = useCallback(() => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -336,9 +347,9 @@ export default function Marketplace() {
       setLocationError('Geolocation is not supported by your browser.');
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const fetchNearbyUsers = async () => {
+  const fetchNearbyUsers = useCallback(async () => {
     if (!userLocation) return;
 
     try {
@@ -353,7 +364,7 @@ export default function Marketplace() {
     } catch (error) {
       console.error('Error fetching nearby users:', error);
     }
-  };
+  }, [userLocation]);
 
   const toggleGoLive = async () => {
     if (!userLocation) {

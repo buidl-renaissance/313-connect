@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
 import { AuthGuard } from '@/components/AuthGuard';
@@ -220,13 +220,8 @@ export default function EditOffering() {
     imageUrl: '',
   });
 
-  useEffect(() => {
+  const fetchOffering = useCallback(async () => {
     if (!token || !id) return;
-
-    fetchOffering();
-  }, [token, id]);
-
-  const fetchOffering = async () => {
     try {
       const response = await fetch(`/api/offerings/${id}`, {
         headers: {
@@ -251,7 +246,11 @@ export default function EditOffering() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [token, id]);
+
+  useEffect(() => {
+    fetchOffering();
+  }, [fetchOffering]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

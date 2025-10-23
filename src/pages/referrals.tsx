@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
 import { AuthGuard } from '@/components/AuthGuard';
@@ -200,8 +200,13 @@ interface Referral {
   status: string;
   createdAt: Date;
   referredUser?: {
-    profile: any;
-    identity: any;
+    profile: {
+      displayName: string | null;
+      region: string | null;
+    } | null;
+    identity: {
+      fullNumber: string;
+    } | null;
   } | null;
 }
 
@@ -218,13 +223,8 @@ export default function Referrals() {
   const [stats, setStats] = useState<Stats>({ total: 0, completed: 0, pending: 0 });
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchReferrals = useCallback(async () => {
     if (!token) return;
-
-    fetchReferrals();
-  }, [token]);
-
-  const fetchReferrals = async () => {
     try {
       const response = await fetch('/api/referrals', {
         headers: {
@@ -242,7 +242,11 @@ export default function Referrals() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchReferrals();
+  }, [fetchReferrals]);
 
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString('en-US', {
