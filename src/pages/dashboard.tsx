@@ -113,6 +113,45 @@ const EmptyState = styled.div`
   color: #aaaaaa;
 `;
 
+const QuickActions = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+`;
+
+const ActionCard = styled.button`
+  background: rgba(255, 115, 0, 0.1);
+  border: 1px solid rgba(255, 115, 0, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ffffff;
+  text-align: left;
+  
+  &:hover {
+    background: rgba(255, 115, 0, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  div:first-child {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  div:nth-child(2) {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  
+  div:last-child {
+    font-size: 0.85rem;
+    color: #aaaaaa;
+  }
+`;
+
 interface Profile {
   displayName: string | null;
   bio: string | null;
@@ -229,6 +268,32 @@ export default function Dashboard() {
         </Header>
 
         <Main>
+          <Section>
+            <SectionTitle>Quick Actions</SectionTitle>
+            <QuickActions>
+              <ActionCard onClick={() => router.push('/offerings/create')}>
+                <div>📦</div>
+                <div>Create Offering</div>
+                <div>Share what you offer</div>
+              </ActionCard>
+              <ActionCard onClick={() => router.push('/marketplace')}>
+                <div>🌍</div>
+                <div>Marketplace</div>
+                <div>Discover nearby</div>
+              </ActionCard>
+              <ActionCard onClick={() => router.push('/analytics')}>
+                <div>📊</div>
+                <div>Analytics</div>
+                <div>Track performance</div>
+              </ActionCard>
+              <ActionCard onClick={() => router.push('/offerings')}>
+                <div>📋</div>
+                <div>My Offerings</div>
+                <div>Manage services</div>
+              </ActionCard>
+            </QuickActions>
+          </Section>
+
           <Section>
             <SectionTitle>Your Profile</SectionTitle>
             {profile && (

@@ -26,8 +26,13 @@ export const profiles = sqliteTable('profiles', {
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }).unique(),
   displayName: text('display_name'),
   bio: text('bio'),
+  tagline: text('tagline'), // Short description for cards
   region: text('region'), // Neighborhood: Midtown, Hamtramck, Corktown, etc.
   verificationStatus: text('verification_status').notNull().default('unverified'), // unverified, pending, verified
+  contactEmail: text('contact_email'),
+  contactPhone: text('contact_phone'),
+  socialLinks: text('social_links'), // JSON: {twitter, linkedin, instagram, etc}
+  privacySettings: text('privacy_settings'), // JSON: location sharing, contact visibility
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
 });
@@ -90,6 +95,89 @@ export const nonces = sqliteTable('nonces', {
   expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
 });
 
+// Offerings table - services/products users want to promote
+export const offerings = sqliteTable('offerings', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  title: text('title').notNull(),
+  description: text('description'),
+  category: text('category').notNull(), // e.g., "Stickers", "Tattoos", "Photography", "Music"
+  price: text('price'), // Flexible text field for pricing info
+  contactEmail: text('contact_email'),
+  contactPhone: text('contact_phone'),
+  imageUrl: text('image_url'),
+  isActive: integer('is_active', { mode: 'boolean' }).notNull().default(true),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+});
+
+// Cards table - shareable contact/service cards with unique URLs
+export const cards = sqliteTable('cards', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  offeringId: text('offering_id').references(() => offerings.id, { onDelete: 'set null' }), // nullable
+  shareUrl: text('share_url').notNull().unique(), // Short unique code
+  title: text('title'), // Custom title for the card
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+}, (table) => ({
+  shareUrlIdx: uniqueIndex('share_url_idx').on(table.shareUrl),
+}));
+
+// Card views table - track views on shared cards
+export const cardViews = sqliteTable('card_views', {
+  id: text('id').primaryKey(),
+  cardId: text('card_id').notNull().references(() => cards.id, { onDelete: 'cascade' }),
+  viewerUserId: text('viewer_user_id').references(() => users.id, { onDelete: 'set null' }), // nullable
+  ipAddress: text('ip_address'),
+  userAgent: text('user_agent'),
+  referrer: text('referrer'),
+  location: text('location'), // JSON: {city, region, country}
+  viewedAt: integer('viewed_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+});
+
+// Card shares table - track when cards are shared
+export const cardShares = sqliteTable('card_shares', {
+  id: text('id').primaryKey(),
+  cardId: text('card_id').notNull().references(() => cards.id, { onDelete: 'cascade' }),
+  sharedBy: text('shared_by').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  sharedVia: text('shared_via').notNull(), // link, qr, twitter, linkedin, email, etc.
+  sharedAt: integer('shared_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+});
+
+// Conversions table - track when card views lead to connections
+export const conversions = sqliteTable('conversions', {
+  id: text('id').primaryKey(),
+  cardId: text('card_id').notNull().references(() => cards.id, { onDelete: 'cascade' }),
+  viewerId: text('viewer_id').references(() => users.id, { onDelete: 'set null' }), // nullable
+  conversionType: text('conversion_type').notNull(), // connection, contact, booking
+  convertedAt: integer('converted_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+});
+
+// Referrals table - track referral chains and potential commissions
+export const referrals = sqliteTable('referrals', {
+  id: text('id').primaryKey(),
+  referrerId: text('referrer_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  referredUserId: text('referred_user_id').references(() => users.id, { onDelete: 'set null' }), // nullable
+  cardId: text('card_id').references(() => cards.id, { onDelete: 'set null' }), // nullable
+  status: text('status').notNull().default('pending'), // pending, completed, failed
+  commissionAmount: text('commission_amount'), // Flexible text for amount
+  commissionPaid: integer('commission_paid', { mode: 'boolean' }).notNull().default(false),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+});
+
+// Live locations table - users who are "live" and browsing marketplace
+export const liveLocations = sqliteTable('live_locations', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }).unique(),
+  latitude: text('latitude').notNull(),
+  longitude: text('longitude').notNull(),
+  currentOffering: text('current_offering'), // What they're currently promoting
+  isVisible: integer('is_visible', { mode: 'boolean' }).notNull().default(true),
+  visibilityMode: text('visibility_mode').notNull().default('all'), // all, connections, invisible
+  lastUpdated: integer('last_updated', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
+  expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
+});
+
 // Type exports for TypeScript
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
@@ -107,4 +195,18 @@ export type AuthChallenge = typeof authChallenges.$inferSelect;
 export type NewAuthChallenge = typeof authChallenges.$inferInsert;
 export type Nonce = typeof nonces.$inferSelect;
 export type NewNonce = typeof nonces.$inferInsert;
+export type Offering = typeof offerings.$inferSelect;
+export type NewOffering = typeof offerings.$inferInsert;
+export type Card = typeof cards.$inferSelect;
+export type NewCard = typeof cards.$inferInsert;
+export type CardView = typeof cardViews.$inferSelect;
+export type NewCardView = typeof cardViews.$inferInsert;
+export type CardShare = typeof cardShares.$inferSelect;
+export type NewCardShare = typeof cardShares.$inferInsert;
+export type Conversion = typeof conversions.$inferSelect;
+export type NewConversion = typeof conversions.$inferInsert;
+export type Referral = typeof referrals.$inferSelect;
+export type NewReferral = typeof referrals.$inferInsert;
+export type LiveLocation = typeof liveLocations.$inferSelect;
+export type NewLiveLocation = typeof liveLocations.$inferInsert;
 

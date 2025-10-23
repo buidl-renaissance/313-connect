@@ -11,7 +11,7 @@ import * as dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 
 import { db } from './client';
-import { users, identities, profiles, events } from './schema';
+import { users, identities, profiles, events, offerings } from './schema';
 import { generateId } from '@/utils/auth';
 
 async function seed() {
@@ -111,10 +111,58 @@ async function seed() {
       console.log(`  ✓ Created event: ${event.title}`);
     }
 
+    // Create sample offerings
+    console.log('\nCreating sample offerings...');
+    
+    const sampleOfferings = [
+      {
+        id: generateId('off'),
+        userId: sampleUser.id,
+        title: 'Custom Sticker Design',
+        description: 'High-quality vinyl stickers for your brand, event, or personal use. Fast turnaround and competitive pricing.',
+        category: 'Stickers & Prints',
+        price: '$50-200 depending on quantity',
+        contactEmail: 'stickers@example.com',
+        contactPhone: null,
+        imageUrl: null,
+        isActive: true,
+      },
+      {
+        id: generateId('off'),
+        userId: sampleUser.id,
+        title: 'Professional Photography',
+        description: 'Event photography, portraits, and product shots. Detroit-based photographer with 10+ years experience.',
+        category: 'Photography',
+        price: 'Starting at $150/hour',
+        contactEmail: 'photos@example.com',
+        contactPhone: '(313) 555-0100',
+        imageUrl: null,
+        isActive: true,
+      },
+      {
+        id: generateId('off'),
+        userId: sampleUser.id,
+        title: 'Web Development Services',
+        description: 'Custom websites and web applications. Specializing in React, Next.js, and modern web technologies.',
+        category: 'Technology',
+        price: 'Contact for quote',
+        contactEmail: 'dev@example.com',
+        contactPhone: null,
+        imageUrl: null,
+        isActive: true,
+      },
+    ];
+
+    for (const offering of sampleOfferings) {
+      await db.insert(offerings).values(offering);
+      console.log(`  ✓ Created offering: ${offering.title}`);
+    }
+
     console.log('\n✅ Database seeded successfully!');
     console.log('\nSeeded data:');
     console.log(`  - ${reservedNumbers.length} reserved identities`);
     console.log(`  - ${sampleEvents.length} sample events`);
+    console.log(`  - ${sampleOfferings.length} sample offerings`);
     console.log('\nYou can now start the development server with: yarn dev');
     
   } catch (error) {

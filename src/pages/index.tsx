@@ -11,22 +11,6 @@ const Container = styled.div`
   overflow-x: hidden;
 `;
 
-const Logo = styled.h1`
-  font-size: 2rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #ff7300 0%, #ffa500 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 0 0 1.5rem 0;
-  letter-spacing: -1px;
-  
-  @media (max-width: 768px) {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-  }
-`;
-
 const Hero = styled.section`
   min-height: 100vh;
   min-height: 100dvh; /* Use dynamic viewport height for mobile browsers */
@@ -552,8 +536,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>313-Connect - Your Local Network, Rooted in Detroit</title>
-        <meta name="description" content="Your local network — verified by connection, rooted in Detroit." />
+        <title>313-Connect - I Got a Guy for That</title>
+        <meta name="description" content="Connect people to services, products, and opportunities. Share what you offer, discover nearby, and track your referrals. Your local 313 network." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/png" href="/images/313-connect.png" />
       </Head>
@@ -561,8 +545,6 @@ export default function Home() {
       <Container>
         <Hero>
           <HeroContent>
-            {/* <Logo>313 CONNECT</Logo> */}
-            
             <NumberDisplay>
               <DisplayLabel>Claim Your Number</DisplayLabel>
               <NumberRow>
@@ -632,31 +614,31 @@ export default function Home() {
         <Section id="how-it-works">
           <SectionTitle>How It Works</SectionTitle>
           <SectionSubtitle>
-            Three simple steps to join Detroit&apos;s hyperlocal network
+            Your network of trusted connections and services
           </SectionSubtitle>
           
           <StepsContainer>
             <StepCard>
               <StepNumber>1</StepNumber>
-              <StepTitle>Pick Your Number</StepTitle>
+              <StepTitle>Claim Your Number</StepTitle>
               <StepDescription>
-                Choose a unique number in the 313 area code. It&apos;s your identity on the network.
+                Choose a unique 313 identity. Add your name and what you offer.
               </StepDescription>
             </StepCard>
             
             <StepCard>
               <StepNumber>2</StepNumber>
-              <StepTitle>Download the App</StepTitle>
+              <StepTitle>Share Your Services</StepTitle>
               <StepDescription>
-                Get the 313 Connect mobile app and complete your verification with a wallet signature.
+                Create offerings and shareable cards. Track views, shares, and connections.
               </StepDescription>
             </StepCard>
             
             <StepCard>
               <StepNumber>3</StepNumber>
-              <StepTitle>Join the Network</StepTitle>
+              <StepTitle>Connect & Grow</StepTitle>
               <StepDescription>
-                Connect with locals, attend events, and build your community — all verified by real connections.
+                Go live at events, discover nearby offerings, and build your network.
               </StepDescription>
             </StepCard>
           </StepsContainer>
@@ -666,67 +648,68 @@ export default function Home() {
         <Section id="features" style={{ background: 'rgba(255, 115, 0, 0.02)' }}>
           <SectionTitle>Features</SectionTitle>
           <SectionSubtitle>
-            Everything you need for a trusted, local network
+            Your platform for local connections and lead generation
           </SectionSubtitle>
           
           <FeaturesGrid>
             <FeatureCard>
               <FeatureIcon>📱</FeatureIcon>
-              <FeatureTitle>Your Number, Your Identity</FeatureTitle>
+              <FeatureTitle>Your 313 Identity</FeatureTitle>
               <FeatureDescription>
-                Claim a unique 313 number that represents you. Simple, memorable, and uniquely yours.
+                Claim a unique 313 number. Add your name and offerings to build your personal brand.
               </FeatureDescription>
             </FeatureCard>
             
             <FeatureCard>
-              <FeatureIcon>🔒</FeatureIcon>
-              <FeatureTitle>Privacy First</FeatureTitle>
+              <FeatureIcon>📦</FeatureIcon>
+              <FeatureTitle>Share What You Offer</FeatureTitle>
               <FeatureDescription>
-                Your data stays yours. Web3 wallet authentication ensures secure, private connections.
+                Create offerings for your services, products, or skills. From stickers to tattoos to tech.
+              </FeatureDescription>
+            </FeatureCard>
+            
+            <FeatureCard>
+              <FeatureIcon>🔗</FeatureIcon>
+              <FeatureTitle>Shareable Cards</FeatureTitle>
+              <FeatureDescription>
+                Generate trackable cards for each offering. Share via link, QR code, or social media.
+              </FeatureDescription>
+            </FeatureCard>
+            
+            <FeatureCard>
+              <FeatureIcon>📊</FeatureIcon>
+              <FeatureTitle>Track Everything</FeatureTitle>
+              <FeatureDescription>
+                See views, shares, conversions, and referrals. Know what&apos;s working and optimize your reach.
+              </FeatureDescription>
+            </FeatureCard>
+            
+            <FeatureCard>
+              <FeatureIcon>🌍</FeatureIcon>
+              <FeatureTitle>Location Marketplace</FeatureTitle>
+              <FeatureDescription>
+                Go live at events. Discover who&apos;s nearby and what they&apos;re offering right now.
               </FeatureDescription>
             </FeatureCard>
             
             <FeatureCard>
               <FeatureIcon>🤝</FeatureIcon>
-              <FeatureTitle>Real Connections</FeatureTitle>
+              <FeatureTitle>Referral Network</FeatureTitle>
               <FeatureDescription>
-                Build your network through verified, in-person interactions. No fake profiles, just real people.
-              </FeatureDescription>
-            </FeatureCard>
-            
-            <FeatureCard>
-              <FeatureIcon>📍</FeatureIcon>
-              <FeatureTitle>Hyperlocal Events</FeatureTitle>
-              <FeatureDescription>
-                Discover and create events in your neighborhood. Check in with your 313 identity.
-              </FeatureDescription>
-            </FeatureCard>
-            
-            <FeatureCard>
-              <FeatureIcon>🎯</FeatureIcon>
-              <FeatureTitle>Detroit-Rooted</FeatureTitle>
-              <FeatureDescription>
-                Built for the 313 community. A network that celebrates Detroit&apos;s unique culture and spirit.
-              </FeatureDescription>
-            </FeatureCard>
-            
-            <FeatureCard>
-              <FeatureIcon>⚡</FeatureIcon>
-              <FeatureTitle>Edge-Fast Database</FeatureTitle>
-              <FeatureDescription>
-                Powered by Turso&apos;s distributed SQLite. Lightning-fast queries from anywhere in the world.
+                Build your reputation as the person who&apos;s got a guy for everything. Track your referrals.
               </FeatureDescription>
             </FeatureCard>
           </FeaturesGrid>
         </Section>
         
         <Footer>
-          <p>313Connect — Rooted in Detroit, Built for Community</p>
+          <p>313Connect — I Got a Guy for That</p>
           <p style={{ marginTop: '1rem', fontSize: '0.8rem' }}>
-            A hyperlocal decentralized identity network
+            Your local network for connections, services, and opportunities
           </p>
         </Footer>
       </Container>
     </>
   );
 }
+

@@ -95,51 +95,137 @@ The `src/pages/api` directory is mapped to `/api/*`. Files in this directory are
 
 ## ✨ Features Implemented
 
-### v0.1 - Current Release
+### v0.2 - Lead Generation Platform (Current)
+
+**"I Got a Guy for That"** - Transform your network into a lead generation machine.
+
+**Offerings Management:**
+- ✅ Create and manage services/products
+- ✅ 11+ categories (Art, Tech, Music, Tattoos, etc.)
+- ✅ Pricing and contact information
+- ✅ Active/inactive status toggle
+
+**Shareable Cards:**
+- ✅ Generate unique trackable URLs
+- ✅ QR code generation
+- ✅ Share via Twitter, email, direct link
+- ✅ Public card view (no auth required)
+- ✅ Automatic view and conversion tracking
+
+**Analytics Dashboard:**
+- ✅ Total views, shares, conversions
+- ✅ Conversion rate calculation
+- ✅ Top performing cards
+- ✅ Recent views timeline
+- ✅ Source tracking
+
+**Location Marketplace:**
+- ✅ Go live at events and locations
+- ✅ Discover nearby users (25-mile radius)
+- ✅ Real-time location updates
+- ✅ 4-hour auto-expiration
+- ✅ Privacy controls
+
+**Referral System:**
+- ✅ Automatic referral tracking
+- ✅ Referral status dashboard
+- ✅ Network effect metrics
+- ✅ Completion tracking
+
+### v0.1 - Foundation
 
 **Authentication System:**
 - ✅ DPoP-based wallet authentication
 - ✅ QR code challenge generation
-- ✅ Client-side keypair management
 - ✅ JWT token issuance and refresh
 - ✅ Protected routes
 
 **Identity Management:**
 - ✅ 313 number claiming system
 - ✅ Real-time availability checking
-- ✅ User profiles with regions
-- ✅ Wallet address binding
+- ✅ User profiles with enhanced fields
 
 **Social Features:**
 - ✅ Peer-to-peer connections
 - ✅ Connection verification
-- ✅ Profile display
 
 **Events:**
 - ✅ Event creation and browsing
 - ✅ Regional filtering
 - ✅ Event check-ins
-- ✅ Community calendar
-
-**Web Application:**
-- ✅ Responsive landing page
-- ✅ User dashboard
-- ✅ Events page
-- ✅ Profile management
 
 ## 📦 Database Schema
 
 The application uses Turso (SQLite) with the following tables:
+
+**Core Tables:**
 - `users` - User accounts with wallet addresses
 - `identities` - Claimed 313 numbers
-- `profiles` - User profile information
+- `profiles` - User profile information (enhanced with contact fields)
 - `connections` - Peer-to-peer connections
 - `events` - Community events
 - `checkins` - Event attendance
+
+**Lead Generation Tables (New):**
+- `offerings` - Services/products users offer
+- `cards` - Shareable trackable cards
+- `card_views` - View tracking with analytics
+- `card_shares` - Share event tracking
+- `conversions` - Conversion event tracking
+- `referrals` - Referral chain tracking
+- `live_locations` - Real-time marketplace positions
+
+**Auth Tables:**
 - `auth_challenges` - Authentication challenges
 - `nonces` - Replay attack prevention
 
 See `src/db/schema.ts` for complete schema definition.
+
+## 🚀 Quick Start Guide
+
+### Explore New Features
+
+After setting up the database, explore these new pages:
+
+1. **Create an Offering** → `http://localhost:3000/offerings/create`
+   - Add a service or product you want to promote
+   
+2. **View Your Offerings** → `http://localhost:3000/offerings`
+   - Manage all your offerings in one place
+   
+3. **Generate a Card** → Click "Create Card" on any offering
+   - Get a shareable URL and QR code
+   
+4. **Check Analytics** → `http://localhost:3000/analytics`
+   - See views, shares, and conversions
+   
+5. **Go to Marketplace** → `http://localhost:3000/marketplace`
+   - Go live and discover nearby users
+   
+6. **Track Referrals** → `http://localhost:3000/referrals`
+   - See who you've connected
+
+### Example User Flow
+
+```bash
+# 1. Start the app
+yarn dev
+
+# 2. Claim a 313 number on homepage
+# 3. Login to dashboard
+# 4. Create your first offering (e.g., "Custom Stickers")
+# 5. Generate a shareable card
+# 6. Share the card link
+# 7. View analytics to track performance
+# 8. Go live in marketplace when at an event
+```
+
+## 📖 Documentation
+
+- [**FEATURES.md**](./FEATURES.md) - Comprehensive feature guide
+- [**IMPLEMENTATION_STATUS.md**](./IMPLEMENTATION_STATUS.md) - Development status
+- [**PRD.md**](./docs/PRD.md) - Product requirements
+- [**PAD.md**](./docs/PAD.md) - Platform architecture
 
 ## 📚 Learn More
 
